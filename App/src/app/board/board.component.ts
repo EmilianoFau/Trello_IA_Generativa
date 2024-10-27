@@ -5,11 +5,14 @@ import {List} from '../models/list';
 import {Priority} from '../models/priority';
 import {Status} from '../models/status';
 import {Card} from '../models/card';
+import {PostCardFormComponent} from '../post-card-form/post-card-form.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [],
+  imports: [
+    PostCardFormComponent
+  ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
