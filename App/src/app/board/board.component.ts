@@ -21,6 +21,22 @@ export class BoardComponent {
 
   lists: List[] = [];
   card: Card[] = [];
+  selectedCard: Card | null = null;
+  isEdit: boolean = false;
+
+  ngOnInit(): void {
+    this.getLists();
+  }
+
+  openCardModal(card: Card | null): void {
+    this.selectedCard = card;
+    this.isEdit = card !== null;
+  }
+
+  closeCardModal(): void {
+    this.selectedCard = null;
+    this.isEdit = false;
+  }
 
   getLists(): void {
     this.http.getLists().subscribe(

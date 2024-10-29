@@ -13,8 +13,8 @@
         </div>
       </div>
       <ul class="cards">
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
+        <li class="card" *ngFor="let card of list.cards">
+          <button (click)="openCardModal(card)">{{ card.title }}</button>
         </li>
         <li class="card">
           <button>Titulo targeta asd asd asda sdas das dassad</button>
@@ -63,7 +63,7 @@
         </li>
       </ul>
       <div class="footer">
-        <button>+ Añade una targeta</button>
+        <button (click)="openCardModal(null)">+ Añade una tarjeta</button>
       </div>
     </li>
     <li class="add-list">
