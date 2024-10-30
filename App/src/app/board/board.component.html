@@ -4,66 +4,21 @@
     <button><span></span><span></span><span></span></button>
   </div>
   <ul class="lists">
-    <li class="list">
+    <li class="list" *ngFor="let list of lists">
       <div class="header">
-        <h3>Titulo listaa sd asdasd asd asdasd</h3>
+        <h3>{{list.title}}</h3>
         <div class="options-list">
           <button class="edit"></button>
           <button class="delete"></button>
         </div>
       </div>
       <ul class="cards">
-        <li class="card" *ngFor="let card of list.cards">
-          <button (click)="openCardModal(card)">{{ card.title }}</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
-        </li>
-        <li class="card">
-          <button>Titulo targeta asd asd asda sdas das dassad</button>
+        <li class="card" *ngFor="let card of cards">
+          <button (click)="openCard(card)">{{card.title}}</button>
         </li>
       </ul>
       <div class="footer">
-        <button (click)="openCardModal(null)">+ Añade una tarjeta</button>
+        <button (click)="openCreateCardForm(list)">+ Añade una tarjeta</button>
       </div>
     </li>
     <li class="add-list">
@@ -71,3 +26,5 @@
     </li>
   </ul>
 </div>
+<app-create-card-form *ngIf="isCreateCardFormOpen" [list]="selectedList" (refresh)="getLists()" (closeModal)="closeCreateCardForm()"></app-create-card-form>
+<app-card *ngIf="isCardOpen" [card]="selectedCard" (refresh)="getLists()" (closeModal)="closeCard()"></app-card>

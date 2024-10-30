@@ -1,0 +1,32 @@
+<div id="card-form">
+  <div class="content">
+    <div class="head">
+      <h2>Agregar targeta</h2>
+      <button (click)="close()"></button>
+    </div>
+
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+      <input formControlName="title" placeholder="Título" />
+      <textarea formControlName="description" placeholder="Descripción"></textarea>
+      <select formControlName="priority">
+        <option *ngFor="let priority of priorities" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+      <select formControlName="status">
+        <option *ngFor="let status of statuses" [value]="status">
+          {{ status }}
+        </option>
+      </select>
+      <div class="form-date">
+        <label for="startDate">Fecha de inicio</label>
+        <input type="date" id="startDate" formControlName="startDate" />
+      </div>
+      <div class="form-date">
+        <label for="endDate">Fecha de fin</label>
+        <input type="date" id="endDate" formControlName="endDate" />
+      </div>
+      <input type="submit" placeholder="Agregar Tarea"/>
+    </form>
+  </div>
+</div>

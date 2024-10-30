@@ -5,37 +5,101 @@ import {List} from '../models/list';
 import {Priority} from '../models/priority';
 import {Status} from '../models/status';
 import {Card} from '../models/card';
-import {PostCardFormComponent} from '../post-card-form/post-card-form.component';
+import {CreateCardFormComponent} from '../create-card-form/create-card-form.component';
+import {NgForOf, NgIf} from '@angular/common';
+import {CardComponent} from '../card/card.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
   imports: [
-    PostCardFormComponent
+    CreateCardFormComponent,
+    NgIf,
+    CardComponent,
+    NgForOf
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
 export class BoardComponent {
+  lists: List[] = [
+    {
+      idList: "asd123",
+      title: "Titulo 1",
+      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
+    },
+    {
+      idList: "asd123",
+      title: "Titulo 1",
+      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
+    },
+    {
+      idList: "asd123",
+      title: "Titulo 1",
+      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
+    },
+  ];
+  cards: Card[] = [
+    {
+      idCard: "asdas123",
+      title: "Titulo card",
+      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+      startDate: new Date(),
+      endDate: new Date(),
+      status: Status.ToDo,
+      priority: Priority.High,
+      idList: "asd123",
+    },
+    {
+      idCard: "asdas123",
+      title: "Titulo card",
+      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+      startDate: new Date(),
+      endDate: new Date(),
+      status: Status.ToDo,
+      priority: Priority.High,
+      idList: "asd123",
+    },
+    {
+      idCard: "asdas123",
+      title: "Titulo card",
+      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+      startDate: new Date(),
+      endDate: new Date(),
+      status: Status.ToDo,
+      priority: Priority.High,
+      idList: "asd123",
+    },
+  ];
+  isCreateCardFormOpen: boolean = false;
+  selectedList: List | undefined;
+  isCardOpen: boolean = false;
+  selectedCard: Card | undefined;
+
   constructor(private http: HttpService) {}
 
-  lists: List[] = [];
-  card: Card[] = [];
-  selectedCard: Card | null = null;
-  isEdit: boolean = false;
-
   ngOnInit(): void {
-    this.getLists();
+    //this.getLists();
   }
 
-  openCardModal(card: Card | null): void {
+  openCreateCardForm(list: List): void {
+    this.selectedList = list;
+    this.isCreateCardFormOpen = true;
+  }
+
+  closeCreateCardForm(): void {
+    this.selectedList = undefined;
+    this.isCreateCardFormOpen = false;
+  }
+
+  openCard(card: Card): void {
     this.selectedCard = card;
-    this.isEdit = card !== null;
+    this.isCardOpen = true;
   }
 
-  closeCardModal(): void {
-    this.selectedCard = null;
-    this.isEdit = false;
+  closeCard(): void {
+    this.selectedCard = undefined;
+    this.isCardOpen = false;
   }
 
   getLists(): void {

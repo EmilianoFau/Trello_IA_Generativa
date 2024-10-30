@@ -1,0 +1,28 @@
+<div id="card" *ngIf="card">
+  <div class="content">
+    <div class="title">
+      <input [value]=card.title>
+      <button>IA</button>
+    </div>
+    <div class="description">
+      <textarea [value]="card.description"></textarea>
+      <button>IA</button>
+    </div>
+    <div class="status">
+      <p>Estatus</p>
+      <select formControlName="status">
+        <option *ngFor="let status of statuses" [value]="card.status">{{status}}</option>
+      </select>
+    </div>
+    <div class="priority">
+      <p>Prioridad</p>
+      <select formControlName="priority">
+        <option *ngFor="let priority of priorities" [value]="card.priority">{{priority}}</option>
+      </select>
+    </div>
+    <div class="dates">
+      <input type="date" [value]=card.startDate>
+      <input type="date" [value]=card.endDate>
+    </div>
+  </div>
+</div>
