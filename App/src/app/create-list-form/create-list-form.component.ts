@@ -29,8 +29,8 @@ export class CreateListFormComponent {
 
   onSubmit(): void {
     this.httpService.postList(
-      this.listForm.value.description,
-      this.listForm.value.title
+      this.listForm.value.title,
+      this.listForm.value.description
     ).subscribe(
       (response: any): void => {
         this.close();

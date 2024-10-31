@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {List} from '../models/list';
 import {Card} from '../models/card';
-import {Priority} from '../models/priority';
-import {Status} from '../models/status';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,7 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-  baseUrl: string = 'https://localhost:44397';
+  baseUrl: string = 'http://127.0.0.1:8000';
 
   getLists(): Observable<any> {
     return this.http.get<any>(this.baseUrl + '/list', this.httpOptions);
@@ -32,14 +30,10 @@ export class HttpService {
     return this.http.post<any>(this.baseUrl + '/list', requestBody, this.httpOptions);
   }
 
-  postCard(description: string, endDate: Date, idList: string, priority: Priority, startDate: Date, status: Status, title: string): Observable<any> {
+  postCard(description: string, idList: string, title: string): Observable<any> {
     const requestBody: Card = {
       description: description,
-      endDate: endDate,
       idList: idList,
-      priority: priority,
-      startDate: startDate,
-      status: status,
       title: title
     };
     return this.http.post<any>(this.baseUrl + '/card', requestBody, this.httpOptions);
@@ -53,14 +47,10 @@ export class HttpService {
     return this.http.put<any>(this.baseUrl + '/list/' + idList, requestBody, this.httpOptions);
   }
 
-  putCard(description: string, endDate: Date, idList: string, priority: Priority, startDate: Date, status: Status, title: string, idCard: string): Observable<any> {
+  putCard(description: string, idList: string, title: string, idCard: string): Observable<any> {
     const requestBody: Card = {
       description: description,
-      endDate: endDate,
       idList: idList,
-      priority: priority,
-      startDate: startDate,
-      status: status,
       title: title
     };
     return this.http.post<any>(this.baseUrl + '/card/' + idCard, requestBody, this.httpOptions);

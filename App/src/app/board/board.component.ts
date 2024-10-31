@@ -2,8 +2,6 @@ import {Component} from '@angular/core';
 import {HttpService} from '../services/http.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {List} from '../models/list';
-import {Priority} from '../models/priority';
-import {Status} from '../models/status';
 import {Card} from '../models/card';
 import {CreateCardFormComponent} from '../create-card-form/create-card-form.component';
 import {NgForOf, NgIf} from '@angular/common';
@@ -26,53 +24,7 @@ import {ListComponent} from '../list/list.component';
   styleUrl: './board.component.css'
 })
 export class BoardComponent {
-  lists: List[] = [
-    {
-      idList: "asd123B",
-      title: "Titulo 1",
-      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd",
-      cards: [{
-        idCard: "adsaaaasdas123",
-        title: "Titulo card 1",
-        description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: Status.ToDo,
-        priority: Priority.High,
-        idList: "asd123B",
-      },
-        {
-          idCard: "asdadasds123",
-          title: "Titulo card 2",
-          description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-          startDate: new Date(),
-          endDate: new Date(),
-          status: Status.ToDo,
-          priority: Priority.High,
-          idList: "asd123B",
-        }]
-    },
-    {
-      idList: "asd123B",
-      title: "Titulo 2",
-      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
-    },
-    {
-      idList: "asd123A",
-      title: "Titulo 3",
-      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd ",
-      cards: [{
-        idCard: "asddasas123",
-        title: "Titulo card 3",
-        description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: Status.ToDo,
-        priority: Priority.High,
-        idList: "asd123A",
-      }]
-    },
-  ];
+  lists: List[] = [];
 
   isCreateCardFormOpen: boolean = false;
   selectedList: List | undefined;
@@ -84,8 +36,7 @@ export class BoardComponent {
   constructor(private http: HttpService) {}
 
   ngOnInit(): void {
-    //this.getLists();
-    //this.getCards();
+    this.getLists();
   }
 
   openCreateCardForm(list: List): void {
@@ -143,6 +94,7 @@ export class BoardComponent {
         this.lists.forEach((list: List): void => {
           list.cards = cards.filter((card: Card): boolean => card.idList === list.idList);
         });
+        console.log(this.lists)
       }, (err: HttpErrorResponse): void => {
         console.log(err);
       }

@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {Card} from '../models/card';
-import {Priority} from '../models/priority';
-import {Status} from '../models/status';
 import {HttpService} from '../services/http.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {List} from '../models/list';

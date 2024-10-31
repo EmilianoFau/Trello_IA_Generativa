@@ -81,54 +81,6 @@
   outline: 2px solid #579DFF;
 }
 
-.state {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.status, .priority {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-}
-
-.status p, .priority p {
-  font-size: 20px;
-}
-
-.status select, .priority select {
-  width: 200px;
-  font-size: 16px;
-  padding: 5px;
-  color: black;
-  background: transparent;
-  border-radius: 5px;
-}
-
-.dates {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.dates p {
-  font-size: 20px;
-}
-
-.dates input {
-  width: 250px;
-  font-size: 16px;
-  padding: 5px;
-  color: black;
-  background: transparent;
-  border-radius: 5px;
-}
-
 .options {
   position: absolute;
   bottom: 0;

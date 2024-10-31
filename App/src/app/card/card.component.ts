@@ -2,8 +2,6 @@ import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/co
 import {Card} from '../models/card';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Priority} from '../models/priority';
-import {Status} from '../models/status';
 import {HttpService} from '../services/http.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -23,28 +21,13 @@ export class CardComponent {
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() refresh: EventEmitter<void> = new EventEmitter<void>();
 
-  priorities: Priority[] = [Priority.Low, Priority.Medium, Priority.High];
-  statuses: Status[] = [Status.ToDo, Status.InProcess, Status.Done, Status.Backlog, Status.Blocked];
-
   cardForm: FormGroup;
 
   constructor(private httpService: HttpService, private fb: FormBuilder) {
     this.cardForm = this.fb.group({
       title: [''],
       description: [''],
-      priority: [''],
-      status: [''],
-      startDate: [''],
-      endDate: [''],
     });
-  }
-
-  getPriorityName(priority: Priority): string {
-    return Priority[priority];
-  }
-
-  getStatusName(status: Status): string {
-    return Status[status];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,10 +35,6 @@ export class CardComponent {
       this.cardForm.patchValue({
         title: this.card.title,
         description: this.card.description,
-        priority: this.card.priority,
-        status: this.card.status,
-        startDate: this.formatDate(this.card.startDate),
-        endDate: this.formatDate(this.card.endDate)
       });
     }
   }
@@ -73,11 +52,7 @@ export class CardComponent {
     if (this.card && this.card.idCard) {
       this.httpService.putCard(
         this.cardForm.value.description,
-        this.cardForm.value.endDate,
         this.card.idList,
-        this.cardForm.value.priority,
-        this.cardForm.value.startDate,
-        this.cardForm.value.status,
         this.cardForm.value.title,
         this.card.idCard
       ).subscribe(
@@ -95,7 +70,8 @@ export class CardComponent {
     if (this.card && this.card.idCard) {
       this.httpService.deleteCard(this.card.idCard).subscribe(
         (response: any): void => {
-
+          this.close();
+          this.refresh.emit();
         }, (err: HttpErrorResponse): void => {
           console.log(err);
         }

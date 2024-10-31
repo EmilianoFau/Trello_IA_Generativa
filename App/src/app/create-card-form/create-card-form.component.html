@@ -6,27 +6,6 @@
     <div class="description">
       <textarea formControlName="description" placeholder="Descripcion"></textarea>
     </div>
-    <div class="state">
-      <div class="status">
-        <p>Estatus</p>
-        <select formControlName="status">
-          <option *ngFor="let status of statuses" [value]="status">{{getStatusName(status)}}</option>
-        </select>
-      </div>
-      <div class="priority">
-        <p>Prioridad</p>
-        <select formControlName="priority">
-          <option *ngFor="let priority of priorities" [value]="priority">{{getPriorityName(priority)}}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="dates">
-      <p>Comienzo/fin</p>
-      <input type="date" formControlName="startDate">
-      <input type="date" formControlName="endDate">
-    </div>
-
     <div class="options">
       <input type="submit">
       <button (click)="close()">Cancelar</button>
