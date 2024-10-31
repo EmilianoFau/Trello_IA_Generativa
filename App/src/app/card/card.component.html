@@ -1,28 +1,36 @@
 <div id="card" *ngIf="card">
-  <div class="content">
+  <form class="content" [formGroup]="cardForm" (ngSubmit)="onSubmit()">
     <div class="title">
-      <input [value]=card.title>
-      <button>IA</button>
+      <input formControlName="title">
+      <button class="delete" (click)="deleteCard()"></button>
     </div>
     <div class="description">
-      <textarea [value]="card.description"></textarea>
-      <button>IA</button>
+      <textarea formControlName="description"></textarea>
     </div>
-    <div class="status">
-      <p>Estatus</p>
-      <select formControlName="status">
-        <option *ngFor="let status of statuses" [value]="card.status">{{status}}</option>
-      </select>
+    <div class="state">
+      <div class="status">
+        <p>Estatus</p>
+        <select formControlName="status">
+          <option *ngFor="let status of statuses" [value]="status">{{getStatusName(status)}}</option>
+        </select>
+      </div>
+      <div class="priority">
+        <p>Prioridad</p>
+        <select formControlName="priority">
+          <option *ngFor="let priority of priorities" [value]="priority">{{getPriorityName(priority)}}</option>
+        </select>
+      </div>
     </div>
-    <div class="priority">
-      <p>Prioridad</p>
-      <select formControlName="priority">
-        <option *ngFor="let priority of priorities" [value]="card.priority">{{priority}}</option>
-      </select>
-    </div>
+
     <div class="dates">
-      <input type="date" [value]=card.startDate>
-      <input type="date" [value]=card.endDate>
+      <p>Comienzo/fin</p>
+      <input type="date" formControlName="startDate">
+      <input type="date" formControlName="endDate">
     </div>
-  </div>
+
+    <div class="options">
+      <input type="submit">
+      <button (click)="close()">Cancelar</button>
+    </div>
+  </form>
 </div>

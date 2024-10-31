@@ -4,4 +4,5 @@ export interface List {
   idList?: string,
   title: string,
   description: string,
+  cards?: Card[];
 }

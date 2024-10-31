@@ -20,28 +20,16 @@ export class HttpService {
     return this.http.get<any>(this.baseUrl + '/list', this.httpOptions);
   }
 
+  getCards(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/card/', this.httpOptions);
+  }
+
   postList(title: string, description: string): Observable<any> {
     const requestBody: List = {
       title: title,
       description: description
     };
     return this.http.post<any>(this.baseUrl + '/list', requestBody, this.httpOptions);
-  }
-
-  putList(idList: string, title: string, description: string): Observable<any> {
-    const requestBody: List = {
-      title: title,
-      description: description
-    };
-    return this.http.put<any>(this.baseUrl + '/list/' + idList, requestBody, this.httpOptions);
-  }
-
-  deleteList(idList: string): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + '/list/' + idList, this.httpOptions);
-  }
-
-  getCards(idList: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/card/' + idList, this.httpOptions);
   }
 
   postCard(description: string, endDate: Date, idList: string, priority: Priority, startDate: Date, status: Status, title: string): Observable<any> {
@@ -57,6 +45,14 @@ export class HttpService {
     return this.http.post<any>(this.baseUrl + '/card', requestBody, this.httpOptions);
   }
 
+  putList(idList: string, title: string, description: string): Observable<any> {
+    const requestBody: List = {
+      title: title,
+      description: description
+    };
+    return this.http.put<any>(this.baseUrl + '/list/' + idList, requestBody, this.httpOptions);
+  }
+
   putCard(description: string, endDate: Date, idList: string, priority: Priority, startDate: Date, status: Status, title: string, idCard: string): Observable<any> {
     const requestBody: Card = {
       description: description,
@@ -68,6 +64,10 @@ export class HttpService {
       title: title
     };
     return this.http.post<any>(this.baseUrl + '/card/' + idCard, requestBody, this.httpOptions);
+  }
+
+  deleteList(idList: string): Observable<any> {
+    return this.http.delete<any>(this.baseUrl + '/list/' + idList, this.httpOptions);
   }
 
   deleteCard(idCard: string): Observable<any> {

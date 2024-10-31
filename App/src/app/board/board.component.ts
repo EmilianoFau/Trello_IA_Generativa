@@ -8,6 +8,8 @@ import {Card} from '../models/card';
 import {CreateCardFormComponent} from '../create-card-form/create-card-form.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {CardComponent} from '../card/card.component';
+import {CreateListFormComponent} from '../create-list-form/create-list-form.component';
+import {ListComponent} from '../list/list.component';
 
 @Component({
   selector: 'app-board',
@@ -16,7 +18,9 @@ import {CardComponent} from '../card/card.component';
     CreateCardFormComponent,
     NgIf,
     CardComponent,
-    NgForOf
+    NgForOf,
+    CreateListFormComponent,
+    ListComponent
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
@@ -24,62 +28,64 @@ import {CardComponent} from '../card/card.component';
 export class BoardComponent {
   lists: List[] = [
     {
-      idList: "asd123",
+      idList: "asd123B",
       title: "Titulo 1",
+      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd",
+      cards: [{
+        idCard: "adsaaaasdas123",
+        title: "Titulo card 1",
+        description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+        startDate: new Date(),
+        endDate: new Date(),
+        status: Status.ToDo,
+        priority: Priority.High,
+        idList: "asd123B",
+      },
+        {
+          idCard: "asdadasds123",
+          title: "Titulo card 2",
+          description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+          startDate: new Date(),
+          endDate: new Date(),
+          status: Status.ToDo,
+          priority: Priority.High,
+          idList: "asd123B",
+        }]
+    },
+    {
+      idList: "asd123B",
+      title: "Titulo 2",
       description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
     },
     {
-      idList: "asd123",
-      title: "Titulo 1",
-      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
-    },
-    {
-      idList: "asd123",
-      title: "Titulo 1",
-      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd "
+      idList: "asd123A",
+      title: "Titulo 3",
+      description: "Descriasdp askdp asjdlj askdh alsjd lkasjdlasjdk jhashdkh askdjhn aksdhhk asjd ",
+      cards: [{
+        idCard: "asddasas123",
+        title: "Titulo card 3",
+        description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
+        startDate: new Date(),
+        endDate: new Date(),
+        status: Status.ToDo,
+        priority: Priority.High,
+        idList: "asd123A",
+      }]
     },
   ];
-  cards: Card[] = [
-    {
-      idCard: "asdas123",
-      title: "Titulo card",
-      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-      startDate: new Date(),
-      endDate: new Date(),
-      status: Status.ToDo,
-      priority: Priority.High,
-      idList: "asd123",
-    },
-    {
-      idCard: "asdas123",
-      title: "Titulo card",
-      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-      startDate: new Date(),
-      endDate: new Date(),
-      status: Status.ToDo,
-      priority: Priority.High,
-      idList: "asd123",
-    },
-    {
-      idCard: "asdas123",
-      title: "Titulo card",
-      description: "asdk jlaskdh asdjhb alksjd kasdh lkasjdnkj ashdlkahs kdjhaskj das",
-      startDate: new Date(),
-      endDate: new Date(),
-      status: Status.ToDo,
-      priority: Priority.High,
-      idList: "asd123",
-    },
-  ];
+
   isCreateCardFormOpen: boolean = false;
   selectedList: List | undefined;
   isCardOpen: boolean = false;
   selectedCard: Card | undefined;
+  isCreateListFormOpen: boolean = false;
+  isListOpen: boolean = false;
 
   constructor(private http: HttpService) {}
 
   ngOnInit(): void {
     //this.getLists();
+    //this.getCards();
   }
 
   openCreateCardForm(list: List): void {
@@ -102,83 +108,56 @@ export class BoardComponent {
     this.isCardOpen = false;
   }
 
+  openCreateListForm(): void {
+    this.isCreateListFormOpen = true;
+  }
+
+  closeCreateListForm(): void {
+    this.isCreateListFormOpen = false;
+  }
+
+  openList(list: List): void {
+    this.selectedList = list;
+    this.isListOpen = true;
+  }
+
+  closeList(): void {
+    this.selectedList = undefined;
+    this.isListOpen = false;
+  }
+
   getLists(): void {
     this.http.getLists().subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
-  postList(): void {
-    this.http.postList("", "").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
-  putList(): void {
-    this.http.putList("", "", "").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
-  deleteList(): void {
-    this.http.deleteList("").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
+      (lists: List[]): void => {
+        this.lists = lists;
+        this.getCards();
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
       }
     )
   }
 
   getCards(): void {
-    this.http.getCards("").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
+    this.http.getCards().subscribe(
+      (cards: Card[]): void => {
+        this.lists.forEach((list: List): void => {
+          list.cards = cards.filter((card: Card): boolean => card.idList === list.idList);
+        });
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
       }
     )
   }
 
-  postCard(): void {
-    this.http.postCard("", new Date(), "", Priority.High, new Date(), Status.Backlog, "").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
-  putCard(): void {
-    this.http.putCard("", new Date(), "", Priority.High, new Date(), Status.Backlog, "", "").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
-  }
-
-  deleteCard(): void {
-    this.http.deleteCard("").subscribe(
-      (response: HttpResponse<BoardComponent[]>) => {
-
-      }, (err: HttpErrorResponse) => {
-
-      }
-    )
+  deleteList(idList: string | undefined): void {
+    if (idList) {
+      this.http.deleteList(idList).subscribe(
+        (response: HttpResponse<BoardComponent[]>) => {
+          this.getLists();
+        }, (err: HttpErrorResponse) => {
+          console.log(err);
+        }
+      )
+    }
   }
 }

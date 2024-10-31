@@ -5,6 +5,7 @@ import { Priority } from '../models/priority';
 import { Status } from '../models/status';
 import {NgForOf, NgIf} from '@angular/common';
 import {List} from '../models/list';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-card-form',
@@ -22,8 +23,9 @@ export class CreateCardFormComponent {
   @Input() list: List | undefined;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() refresh: EventEmitter<void> = new EventEmitter<void>();
-  priorities: any[] = Object.values(Priority);
-  statuses: any[] = Object.values(Status);
+
+  priorities: Priority[] = [Priority.Low, Priority.Medium, Priority.High];
+  statuses: Status[] = [Status.ToDo, Status.InProcess, Status.Done, Status.Backlog, Status.Blocked];
 
   cardForm: FormGroup;
 
@@ -38,6 +40,14 @@ export class CreateCardFormComponent {
     });
   }
 
+  getPriorityName(priority: Priority): string {
+    return Priority[priority];
+  }
+
+  getStatusName(status: Status): string {
+    return Status[status];
+  }
+
   onSubmit(): void {
     if (this.list !== undefined && this.list.idList) {
       this.httpService.postCard(
@@ -48,10 +58,14 @@ export class CreateCardFormComponent {
         this.cardForm.value.startDate,
         this.cardForm.value.status,
         this.cardForm.value.title
-      ).subscribe(response => {
-        this.close();
-        this.refresh.emit();
-      });
+      ).subscribe(
+        (response: any): void => {
+          this.close();
+          this.refresh.emit();
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
     }
   }
 
