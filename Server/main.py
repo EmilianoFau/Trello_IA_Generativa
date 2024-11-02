@@ -4,6 +4,9 @@ from pydantic import BaseModel
 from typing import List, Optional
 from enum import Enum
 from uuid import uuid4
+import ia
+import utils
+
 
 app = FastAPI()
 
@@ -19,9 +22,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# uvicorn main:app --reload
-# http://127.0.0.1:8000/docs
 
+"""
+uvicorn main:app --reload
+http://127.0.0.1:8000/docs
+pip install fastapi
+pip install uvicorn
+pip install pydantic
+"""
 
 class ListModel(BaseModel):
     idList: Optional[str] = ""
@@ -118,3 +126,65 @@ async def deleteCard(idCard: str):
             del cards[i]
             return {"detail": "Card deleted"}
     raise HTTPException(status_code=404, detail="Card not found")
+
+
+# IA
+class IAModel(BaseModel):
+    text: str
+
+
+@app.post("/ia/summarizeContent")
+async def summarizeContent(iaModel: IAModel):
+    response = ia.summarizeContent(iaModel.text)
+    return {"response": response}
+
+
+@app.post("/ia/expandContent")
+async def expandContent(iaModel: IAModel):
+    response = ia.expandContent(iaModel.text)
+    return {"response": response}
+
+
+@app.post("/ia/rewriteAndCorrectContent")
+async def rewriteAndCorrectContent(iaModel: IAModel):
+    response = ia.rewriteAndCorrectContent(iaModel.text)
+    return {"response": response}
+
+
+@app.post("/ia/generateVariations")
+async def generateVariations(iaModel: IAModel):
+    response = ia.generateVariations(iaModel.text)
+    response = utils.processGenerateVariations(response)
+    return {"response": response}
+
+
+@app.post("/ia/correctContent")
+async def correctContent(iaModel: IAModel):
+    response = ia.correctContent(iaModel.text)
+    return {"response": response}
+
+
+@app.post("/ia/generateListsForBoard")
+async def generateListsForBoard(iaModel: IAModel):
+    response = ia.generateListsForBoard(iaModel.text)
+    response = utils.processGenerateListsForBoard(response)
+    return {"response": response}
+
+
+@app.post("/ia/generateCardsForList")
+async def generateCardsForList(iaModel: IAModel):
+    response = ia.generateCardsForList(iaModel.text)
+    response = utils.processGenerateCardsForList(response)
+    return {"response": response}
+
+
+@app.post("/ia/generateListDescription")
+async def generateListDescription(iaModel: IAModel):
+    response = ia.generateListDescription(iaModel.text)
+    return {"response": response}
+
+
+@app.post("/ia/generateCardDescription")
+async def generateCardDescription(iaModel: IAModel):
+    response = ia.generateCardDescription(iaModel.text)
+    return {"response": response}
