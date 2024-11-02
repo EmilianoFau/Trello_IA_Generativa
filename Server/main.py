@@ -136,55 +136,47 @@ class IAModel(BaseModel):
 @app.post("/ia/summarizeContent")
 async def summarizeContent(iaModel: IAModel):
     response = ia.summarizeContent(iaModel.text)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/expandContent")
 async def expandContent(iaModel: IAModel):
     response = ia.expandContent(iaModel.text)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/rewriteAndCorrectContent")
 async def rewriteAndCorrectContent(iaModel: IAModel):
     response = ia.rewriteAndCorrectContent(iaModel.text)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/generateVariations")
 async def generateVariations(iaModel: IAModel):
     response = ia.generateVariations(iaModel.text)
     response = utils.processGenerateVariations(response)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/correctContent")
 async def correctContent(iaModel: IAModel):
     response = ia.correctContent(iaModel.text)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/generateListsForBoard")
 async def generateListsForBoard(iaModel: IAModel):
     response = ia.generateListsForBoard(iaModel.text)
     response = utils.processGenerateListsForBoard(response)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/generateCardsForList")
 async def generateCardsForList(iaModel: IAModel):
     response = ia.generateCardsForList(iaModel.text)
     response = utils.processGenerateCardsForList(response)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/generateListDescription")
 async def generateListDescription(iaModel: IAModel):
     response = ia.generateListDescription(iaModel.text)
-    return {"response": response}
-
+    return response
 
 @app.post("/ia/generateCardDescription")
 async def generateCardDescription(iaModel: IAModel):
     response = ia.generateCardDescription(iaModel.text)
-    return {"response": response}
+    return response

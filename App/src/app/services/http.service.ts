@@ -53,7 +53,7 @@ export class HttpService {
       idList: idList,
       title: title
     };
-    return this.http.post<any>(this.baseUrl + '/card/' + idCard, requestBody, this.httpOptions);
+    return this.http.put<any>(this.baseUrl + '/card/' + idCard, requestBody, this.httpOptions);
   }
 
   deleteList(idList: string): Observable<any> {
@@ -62,5 +62,40 @@ export class HttpService {
 
   deleteCard(idCard: string): Observable<any> {
     return this.http.delete<any>(this.baseUrl + '/card/' + idCard, this.httpOptions);
+  }
+
+  summarizeContent(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/summarizeContent', requestBody, this.httpOptions);
+  }
+
+  expandContent(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/expandContent', requestBody, this.httpOptions);
+  }
+
+  rewriteAndCorrectContent(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/rewriteAndCorrectContent', requestBody, this.httpOptions);
+  }
+
+  generateVariations(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/generateVariations', requestBody, this.httpOptions);
+  }
+
+  correctContent(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/correctContent', requestBody, this.httpOptions);
   }
 }

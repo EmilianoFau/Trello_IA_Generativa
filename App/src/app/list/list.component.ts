@@ -59,4 +59,77 @@ export class ListComponent {
   close(): void {
     this.closeModal.emit();
   }
+
+  iaDescription: string = "";
+
+  summarizeContent(): void {
+    this.iaDescription = "Espere a que se genere su respuesta."
+    if (this.list) {
+      this.httpService.summarizeContent(this.listForm.value.description).subscribe(
+        (response: string): void => {
+          this.iaDescription = response;
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  expandContent(): void {
+    this.iaDescription = "Espere a que se genere su respuesta."
+    if (this.list) {
+      this.httpService.expandContent(this.listForm.value.description).subscribe(
+        (response: string): void => {
+          this.iaDescription = response;
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  rewriteAndCorrectContent(): void {
+    this.iaDescription = "Espere a que se genere su respuesta."
+    if (this.list) {
+      this.httpService.rewriteAndCorrectContent(this.listForm.value.description).subscribe(
+        (response: string): void => {
+          this.iaDescription = response;
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  generateVariations(): void {
+    this.iaDescription = "Espere a que se genere su respuesta."
+    if (this.list) {
+      this.httpService.generateVariations(this.listForm.value.description).subscribe(
+        (response: string[]): void => {
+          let text: string = ""
+          let n: number = 1;
+          response.forEach((e: string): void => {
+            text += "Alternativa " + n + ":\n" + e + "\n\n";
+            n += 1;
+          })
+          this.iaDescription = text;
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  correctContent(): void {
+    this.iaDescription = "Espere a que se genere su respuesta."
+    if (this.list) {
+      this.httpService.correctContent(this.listForm.value.description).subscribe(
+        (response: string): void => {
+          this.iaDescription = response;
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
 }
