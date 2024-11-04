@@ -41,7 +41,6 @@ export class CardComponent {
   }
 
   onSubmit(): void {
-    console.log(123)
     if (this.card && this.card.idCard) {
       this.httpService.putCard(
         this.cardForm.value.description,

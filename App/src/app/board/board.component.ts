@@ -8,6 +8,8 @@ import {NgForOf, NgIf} from '@angular/common';
 import {CardComponent} from '../card/card.component';
 import {CreateListFormComponent} from '../create-list-form/create-list-form.component';
 import {ListComponent} from '../list/list.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Board} from '../models/board';
 
 @Component({
   selector: 'app-board',
@@ -18,13 +20,17 @@ import {ListComponent} from '../list/list.component';
     CardComponent,
     NgForOf,
     CreateListFormComponent,
-    ListComponent
+    ListComponent,
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
 export class BoardComponent {
   lists: List[] = [];
+  boardTitle: string = "";
+  boardTopic: string = ""
 
   isCreateCardFormOpen: boolean = false;
   selectedList: List | undefined;
@@ -33,10 +39,12 @@ export class BoardComponent {
   isCreateListFormOpen: boolean = false;
   isListOpen: boolean = false;
 
-  constructor(private http: HttpService) {}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.getLists();
+    this.getBoardTitle()
+    this.getBoardTitle()
   }
 
   openCreateCardForm(list: List): void {
@@ -77,8 +85,48 @@ export class BoardComponent {
     this.isListOpen = false;
   }
 
+  getBoardTitle(): void {
+    this.httpService.getBoardTitle().subscribe(
+      (boardTitle: any): void => {
+        this.boardTitle = boardTitle.boardTitle;
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    )
+  }
+
+  getBoardTopic(): void {
+    this.httpService.getBoardTopic().subscribe(
+      (boardTopic: any): void => {
+        this.boardTopic = boardTopic.boardTopic;
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    )
+  }
+
+  putBoardTitle(): void {
+    this.httpService.putBoardTitle(this.boardTitle).subscribe(
+      (response: any): void => {
+        this.getBoardTitle();
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    )
+  }
+
+  putBoardTopic(): void {
+    this.httpService.putBoardTopic(this.boardTopic).subscribe(
+      (response: any): void => {
+        this.getBoardTopic();
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    )
+  }
+
   getLists(): void {
-    this.http.getLists().subscribe(
+    this.httpService.getLists().subscribe(
       (lists: List[]): void => {
         this.lists = lists;
         this.getCards();
@@ -89,12 +137,11 @@ export class BoardComponent {
   }
 
   getCards(): void {
-    this.http.getCards().subscribe(
+    this.httpService.getCards().subscribe(
       (cards: Card[]): void => {
         this.lists.forEach((list: List): void => {
           list.cards = cards.filter((card: Card): boolean => card.idList === list.idList);
         });
-        console.log(this.lists)
       }, (err: HttpErrorResponse): void => {
         console.log(err);
       }
@@ -103,7 +150,7 @@ export class BoardComponent {
 
   deleteList(idList: string | undefined): void {
     if (idList) {
-      this.http.deleteList(idList).subscribe(
+      this.httpService.deleteList(idList).subscribe(
         (response: HttpResponse<BoardComponent[]>) => {
           this.getLists();
         }, (err: HttpErrorResponse) => {
@@ -111,5 +158,59 @@ export class BoardComponent {
         }
       )
     }
+  }
+
+  generateCardsForList(idList: string | undefined, listTitle: string, listDescription: string): void {
+    if (idList) {
+      const text: string = "Titulo de la lista: " + listTitle + " \nDescripcion de la lista: " + listDescription;
+      this.httpService.generateCardsForList(text).subscribe(
+        (response: any): void => {
+          response.forEach((e: any): void => {
+            this.postCard(idList, e.title, e.description);
+          })
+        }, (err: HttpErrorResponse): void => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  postCard(idList: string, title: string, description: string): void {
+    this.httpService.postCard(
+      description,
+      idList,
+      title
+    ).subscribe(
+      (response: any): void => {
+        this.getLists();
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    );
+  }
+
+  generateListsForBoard(): void {
+    this.httpService.generateListsForBoard().subscribe(
+      (response: any): void => {
+        response.forEach((e: any): void => {
+          this.postList(e.title, e.description);
+        })
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    );
+  }
+
+  postList(title: string, description: string): void {
+    this.httpService.postList(
+      title,
+      description
+    ).subscribe(
+      (response: any): void => {
+        this.getLists();
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    );
   }
 }

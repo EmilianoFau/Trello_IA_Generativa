@@ -44,4 +44,18 @@ export class CreateListFormComponent {
   close(): void {
     this.closeModal.emit();
   }
+
+  generateListDescription(): void {
+    this.httpService.generateListDescription(
+      this.listForm.value.title,
+    ).subscribe(
+      (response: string): void => {
+        this.listForm.patchValue({
+          description: response,
+        });
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    );
+  }
 }

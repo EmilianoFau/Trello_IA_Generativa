@@ -54,4 +54,18 @@ export class CreateCardFormComponent {
   close(): void {
     this.closeModal.emit();
   }
+
+  generateCardDescription(): void {
+    this.httpService.generateCardDescription(
+      this.cardForm.value.title,
+    ).subscribe(
+      (response: string): void => {
+        this.cardForm.patchValue({
+          description: response,
+        });
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    );
+  }
 }

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {List} from '../models/list';
 import {Card} from '../models/card';
+import {Board} from '../models/board';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,28 @@ export class HttpService {
 
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   baseUrl: string = 'http://127.0.0.1:8000';
+
+  getBoardTitle(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/boardTitle', this.httpOptions);
+  }
+
+  getBoardTopic(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/boardTopic', this.httpOptions);
+  }
+
+  putBoardTitle(boardTitle: string): Observable<any> {
+    const requestBody = {
+      boardTitle: boardTitle
+    };
+    return this.http.put<any>(this.baseUrl + '/boardTitle', requestBody, this.httpOptions);
+  }
+
+  putBoardTopic(boardTopic: string): Observable<any> {
+    const requestBody = {
+      boardTopic: boardTopic
+    };
+    return this.http.put<any>(this.baseUrl + '/boardTopic', requestBody, this.httpOptions);
+  }
 
   getLists(): Observable<any> {
     return this.http.get<any>(this.baseUrl + '/list', this.httpOptions);
@@ -36,6 +59,7 @@ export class HttpService {
       idList: idList,
       title: title
     };
+    console.log(requestBody)
     return this.http.post<any>(this.baseUrl + '/card', requestBody, this.httpOptions);
   }
 
@@ -97,5 +121,30 @@ export class HttpService {
       text: text
     };
     return this.http.post<any>(this.baseUrl + '/ia/correctContent', requestBody, this.httpOptions);
+  }
+
+  generateListsForBoard(): Observable<any> {
+    return this.http.post<any>(this.baseUrl + '/ia/generateListsForBoard', this.httpOptions);
+  }
+
+  generateCardsForList(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/generateCardsForList', requestBody, this.httpOptions);
+  }
+
+  generateListDescription(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/generateListDescription', requestBody, this.httpOptions);
+  }
+
+  generateCardDescription(text: string): Observable<any> {
+    const requestBody: any = {
+      text: text
+    };
+    return this.http.post<any>(this.baseUrl + '/ia/generateCardDescription', requestBody, this.httpOptions);
   }
 }

@@ -1,7 +1,10 @@
 <div id="board">
   <div class="title">
-    <input type="text" value="Nombre tablero">
-    <button><span></span><span></span><span></span></button>
+    <input (change)="putBoardTitle()" [(ngModel)]="boardTitle">
+    <select (change)="putBoardTopic()" [(ngModel)]="boardTopic">
+      <option></option>
+    </select>
+    <button (click)="generateListsForBoard()">Generar listas</button>
   </div>
   <ul class="lists">
     <li class="list" *ngFor="let list of lists">
@@ -19,6 +22,7 @@
       </ul>
       <div class="footer">
         <button (click)="openCreateCardForm(list)">+ Añade una tarjeta</button>
+        <button (click)="generateCardsForList(list.idList, list.title, list.description)">Generar targetas</button>
       </div>
     </li>
     <li class="add-list">
