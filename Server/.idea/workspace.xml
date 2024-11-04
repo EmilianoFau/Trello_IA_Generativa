@@ -8,19 +8,9 @@
       <change beforePath="$PROJECT_DIR$/../App/src/app/board/board.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/board/board.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../App/src/app/board/board.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/board/board.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../App/src/app/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/board/board.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/card/card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/card/card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-card-form/create-card-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/create-list-form/create-list-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../App/src/app/list/list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/list/list.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../App/src/app/services/http.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../App/src/app/services/http.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ia.py" beforeDir="false" afterPath="$PROJECT_DIR$/ia.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +87,7 @@
       <workItem from="1730568831222" duration="2952000" />
       <workItem from="1730642903950" duration="10796000" />
       <workItem from="1730669595546" duration="582000" />
-      <workItem from="1730729528314" duration="5525000" />
+      <workItem from="1730729528314" duration="6907000" />
     </task>
     <servers />
   </component>

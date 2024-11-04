@@ -2,7 +2,7 @@
   <div class="title">
     <input (change)="putBoardTitle()" [(ngModel)]="boardTitle">
     <select (change)="putBoardTopic()" [(ngModel)]="boardTopic">
-      <option></option>
+      <option *ngFor="let topic of topics" [value]="topic">{{topic}}</option>
     </select>
     <button (click)="generateListsForBoard()">Generar listas</button>
   </div>

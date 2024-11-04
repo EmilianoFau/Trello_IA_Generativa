@@ -72,6 +72,14 @@ async def getBoardTopic():
     return {"boardTopic": boardTopic}
 
 
+@app.get("/topics")
+async def getTopics():
+    top = []
+    for e in topics.keys():
+        top.append(e)
+    return {"topics": top}
+
+
 @app.put("/boardTitle")
 async def updateBoardTitle(boardTitleModel: BoardTitleModel):
     global boardTitle
@@ -212,6 +220,10 @@ async def generateCardDescription(iaModel: IAModel):
 
 def getContext() -> str:
     context = f"--- Titulo del tablero: {boardTitle} ---\n\n"
+    if (boardTopic != "Libre"):
+        context += "El tema del tablero es el siguiente:\n"
+        context += f"- Tema: {boardTopic}"
+        context += f"- Descripcion del tema: {topics[boardTopic]}\n\n"
     for index, list in enumerate(lists, start=1):
         context += f"Lista {index}:\n"
         context += f"- Titulo: {list.title}\n"
@@ -223,10 +235,12 @@ def getContext() -> str:
             context += f"   - Titulo: {card.title}\n"
             context += f"   - Descripcion: {card.description}\n"
         context += "\n"
+    print(context)
     return context
 
 
 topics = {
+    "Libre": "",
     "Gestión de Proyectos": "Tableros orientados a la planificación y seguimiento de proyectos, que incluyen listas como 'Fases del proyecto', 'Tareas pendientes', 'En progreso' y 'Finalizadas'. Este tipo de tablero ayuda a los equipos a coordinar esfuerzos, asignar tareas y realizar un seguimiento de los plazos para garantizar la entrega efectiva de los objetivos.",
     "Planificación de Tareas Diarias": "Tableros que ayudan a gestionar tareas diarias o semanales, con listas como 'Por hacer', 'En proceso', 'Completado' y 'Prioridad alta'. Estos tableros permiten una visualización clara de las tareas que necesitan atención inmediata y aquellas que ya se han completado, optimizando la productividad personal o del equipo.",
     "Organización de Eventos": "Tableros dedicados a coordinar todos los detalles de un evento, como bodas, fiestas o conferencias. Las listas pueden incluir 'Preparativos', 'Confirmaciones de asistentes', 'Contrataciones de proveedores' y 'Logística'. Este tipo de tablero es útil para no dejar ningún detalle al azar y garantizar que el evento se desarrolle sin inconvenientes.",

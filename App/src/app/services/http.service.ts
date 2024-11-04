@@ -23,6 +23,10 @@ export class HttpService {
     return this.http.get<any>(this.baseUrl + '/boardTopic', this.httpOptions);
   }
 
+  getTopics(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/topics', this.httpOptions);
+  }
+
   putBoardTitle(boardTitle: string): Observable<any> {
     const requestBody = {
       boardTitle: boardTitle

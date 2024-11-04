@@ -9,7 +9,6 @@ import {CardComponent} from '../card/card.component';
 import {CreateListFormComponent} from '../create-list-form/create-list-form.component';
 import {ListComponent} from '../list/list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Board} from '../models/board';
 
 @Component({
   selector: 'app-board',
@@ -31,6 +30,7 @@ export class BoardComponent {
   lists: List[] = [];
   boardTitle: string = "";
   boardTopic: string = ""
+  topics: string[] = []
 
   isCreateCardFormOpen: boolean = false;
   selectedList: List | undefined;
@@ -44,7 +44,8 @@ export class BoardComponent {
   ngOnInit(): void {
     this.getLists();
     this.getBoardTitle()
-    this.getBoardTitle()
+    this.getBoardTopic()
+    this.getTopics()
   }
 
   openCreateCardForm(list: List): void {
@@ -99,6 +100,16 @@ export class BoardComponent {
     this.httpService.getBoardTopic().subscribe(
       (boardTopic: any): void => {
         this.boardTopic = boardTopic.boardTopic;
+      }, (err: HttpErrorResponse): void => {
+        console.log(err);
+      }
+    )
+  }
+
+  getTopics(): void {
+    this.httpService.getTopics().subscribe(
+      (topics: any): void => {
+        this.topics = topics.topics;
       }, (err: HttpErrorResponse): void => {
         console.log(err);
       }
